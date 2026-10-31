@@ -5,16 +5,16 @@ import "./Realestate.css";
 import bannerImg from "../assets/Realestateimage.png";     // house photo
 import approachImg from "../assets/womentalking.png";
 import LandTransferModal from "./LandTransferModal";
-import person1 from "../assets/person1.jpg";
-import person2 from "../assets/person2.jpg";
-import person3 from "../assets/person3.jpg";
-import person4 from "../assets/person4.jpg";
-import person6 from "../assets/person6.jpg";
-import person8 from "../assets/person8.jpg";
-import person10 from "../assets/person10.jpg";
-import person11 from "../assets/person11.jpg";
-import person14 from "../assets/person14.jpg";
-import person15 from "../assets/person15.jpg";
+import person1 from "../assets/Person1.jpg";
+import person2 from "../assets/Person2.jpg";
+import person3 from "../assets/Person3.jpg";
+import person4 from "../assets/Person4.jpg";
+import person6 from "../assets/Person6.jpg";
+import person8 from "../assets/Person8.jpg";
+import person10 from "../assets/Person10.jpg";
+import person11 from "../assets/Person11.jpg";
+import person14 from "../assets/Person14.jpg";
+import person15 from "../assets/Person15.jpg";
 import bgImage from "../assets/Contactimage.png";
 
 
