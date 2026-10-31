@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../assets/Navbar/Navbar";
-import community from "../assets/community.png";
+import community from "../assets/Community.png";
 import service from "../assets/service.png";
-import time from "../assets/time.png";
-import solution from "../assets/solution.png";
+import time from "../assets/Time.png";
+import solution from "../assets/Solution.png";
 import "./Home.css";
 import Services from "./Components/Service";
 import { Link } from "react-router-dom";
