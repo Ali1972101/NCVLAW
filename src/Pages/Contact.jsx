@@ -5,7 +5,7 @@ import Footer from "./Components/Footer";
 import contactImage from "../assets/Contactimage.png"; // banner photo
 import buildingImg from "../assets/Contactimage.png";  // building photo
 import ContactModal from "./ContactModal";
-import lawyerImage from "../assets/imagecall.png"; // banner photo
+import lawyerImage from "../assets/Imagecall.png"; // banner photo
 import "./Contact.css";
 
 const contact = {

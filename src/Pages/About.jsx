@@ -4,7 +4,7 @@ import Navbar from "../assets/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import bannerImage from "../assets/ncvoffice.png";
 import officeImage from "../assets/ncvreception.png";
-import Aboutimage from "../assets/About.jpg"; // check the exact upper/lower case of this file name
+import Aboutimage from "../assets/about.jpg"; // check the exact upper/lower case of this file name
 import "./About.css";
 
 const events = [
