@@ -1,0 +1,227 @@
+.ltt {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgba(74, 115, 22, 0.75);
+}
+
+.ltt__box {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 24px;
+  padding: 28px 32px 32px;
+  background: #fffdf5;
+  border-radius: 4px;
+}
+
+.ltt__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  background: #4a7316;
+  color: #fff;
+  font-size: 1rem;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ltt__title {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  color: #404040;
+}
+
+.ltt__card {
+  padding: 24px;
+  border: 1px solid #dcd9c8;
+  border-radius: 4px;
+}
+
+.ltt__group { margin-bottom: 22px; }
+
+.ltt__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+  color: #404040;
+}
+
+/* price field with a "$" on the left */
+.ltt__price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: #fffdf5;
+  border: 1px solid #dcd9c8;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  color: #404040;
+}
+.ltt__price:focus-within {
+  outline: 2px solid #4a7316;
+  outline-offset: 1px;
+}
+.ltt__price input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 0;
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.ltt__error {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: #c00;
+}
+
+/* property type and buyer status side by side */
+.ltt__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+/* two-choice selector */
+.ltt__seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid #dcd9c8;
+  border-radius: 4px;
+}
+.ltt__segbtn {
+  padding: 12px 8px;
+  font: inherit;
+  font-size: 1.05rem;
+  color: #404040;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.ltt__segbtn.is-on {
+  background: #dcd9c8;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.ltt__segbtn:focus-visible {
+  outline: 2px solid #4a7316;
+  outline-offset: 2px;
+}
+
+/* Toronto switch row */
+.ltt__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 18px 28px;
+  border: 1px solid #dcd9c8;
+  border-radius: 4px;
+}
+.ltt__toggle-title {
+  font-size: 1.1rem;
+  color: #404040;
+}
+.ltt__toggle-sub {
+  margin-top: 4px;
+  font-size: 1.05rem;
+  color: #8a8a82;
+}
+
+.ltt__switch {
+  position: relative;
+  flex: 0 0 60px;
+  width: 60px;
+  height: 34px;
+  padding: 0;
+  background: #dcd9c8;
+  border: 1px solid #c9c6b2;
+  border-radius: 17px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.ltt__switch span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  background: #fffdf5;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+.ltt__switch.is-on { background: #4a7316; border-color: #4a7316; }
+.ltt__switch.is-on span { transform: translateX(26px); }
+.ltt__switch:focus-visible {
+  outline: 2px solid #4a7316;
+  outline-offset: 2px;
+}
+
+.ltt__calc {
+  padding: 14px 24px;
+  background: #4a7316;
+  color: #fff;
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.ltt__calc:hover { background: #3f6412; }
+
+/* results */
+.ltt__result {
+  margin-top: 24px;
+  padding: 18px 22px;
+  background: #f3f1e3;
+  border-radius: 4px;
+}
+.ltt__line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  font-size: 1.05rem;
+  color: #404040;
+}
+.ltt__line--minus { color: #3f7a14; }
+.ltt__line--total {
+  margin-top: 6px;
+  padding-top: 14px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-top: 2px solid #4a7316;
+}
+
+.ltt__note {
+  margin: 16px 0 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #6b6b64;
+}
+
+/* phones */
+@media (max-width: 700px) {
+  .ltt__box { padding: 24px 14px; margin-top: 8px; }
+  .ltt__card { padding: 16px 12px; }
+  .ltt__row { grid-template-columns: 1fr; gap: 0; }
+  .ltt__toggle { padding: 14px 16px; }
+}

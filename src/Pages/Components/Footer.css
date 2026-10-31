@@ -1,0 +1,92 @@
+.footer {
+  background: #dcd9c8;
+}
+
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 48px;
+  padding: 48px 8vw;
+}
+
+.footer__logo img {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 45px;
+}
+
+.footer__news {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;   /* buttons keep their own width */
+  max-width: 320px;
+}
+
+.footer__heading {
+  margin: 0 0 16px;
+  font-size: 1.8rem;
+  color: #4f8f1f;
+}
+
+.footer__text {
+  margin: 0 0 20px;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  color: #404040;
+}
+
+.footer__btn {
+  display: inline-block;
+  padding: 14px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #3f7a14;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.footer__btn--solid {
+  background: #3f7a14;
+  color: #fff;
+}
+.footer__btn--solid:hover {
+  background: #4f8f1f;
+}
+
+.footer__btn--outline {
+  margin-top: 16px;          /* gap under the Subscribe button */
+  background: transparent;
+  color: #404040;
+}
+.footer__btn--outline:hover {
+  background: #3f7a14;
+  color: #fff;
+}
+
+/* green strip at the bottom */
+.footer__bar {
+  padding: 14px 5vw;
+  background: #4a6f16;
+  color: #fff;
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.footer__bar a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .footer__top {
+    flex-direction: column;
+    padding: 32px 24px;
+  }
+    .footer__logo img {
+        margin-top: 0;
+    }
+}

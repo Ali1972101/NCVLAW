@@ -1,0 +1,192 @@
+/* see-through green panel so the photo shows behind the title */
+.banner--contact .banner__panel {
+  background: rgba(68, 120, 26, 0.85);
+}
+
+.banner--contact .banner__title {
+  margin: 0;
+}
+
+
+.office {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;   /* text | photo | map */
+  gap: 20px;
+  align-items: stretch;
+  padding: 48px 5vw;
+  background: #fffdf5;
+}
+
+.office__title {
+  margin: 0 0 32px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #404040;
+}
+
+.office__address {
+  margin: 0 0 32px;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: #404040;
+}
+
+/* phone, fax, toll free and email in two columns */
+.office__contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+  margin-bottom: 32px;
+  font-size: 1.2rem;
+  color: #404040;
+}
+.office__contact p {
+  margin: 0;
+}
+.office__contact a {
+  color: #3f7a14;
+}
+
+.office__text {
+  margin: 0 0 32px;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: #404040;
+}
+
+.office__btn {
+  display: inline-block;
+  padding: 14px 24px;
+  background: #3f7a14;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+.office__btn:hover {
+  background: #4f8f1f;
+}
+
+.office__photo img,
+.office__map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: 0;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* tablets: text on top, photo and map side by side below */
+@media (max-width: 1000px) {
+  .office {
+    grid-template-columns: 1fr 1fr;
+  }
+  .office__info {
+    grid-column: 1 / -1;
+  }
+}
+
+/* phones: everything in one column */
+@media (max-width: 600px) {
+  .office {
+    grid-template-columns: 1fr;
+  }
+  .office__contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+.findbanner {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center right;
+}
+
+/* light green stripe, a little wider than the dark panel */
+.findbanner__stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 74%;
+  height: 100%;
+  background: #62a024;
+  clip-path: polygon(0 0, 100% 0, 88.5% 100%, 0 100%);
+}
+
+/* dark green panel with the slanted right edge */
+.findbanner__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 14% 0 4.2%;      /* right padding keeps text off the slant */
+  background: #4a7316;
+  clip-path: polygon(0 0, 100% 0, 87.5% 100%, 0 100%);
+}
+
+.findbanner__title {
+  margin: 0 0 32px;
+  font-size: clamp(2rem, 3.4vw, 3rem);
+  color: #fff;
+}
+
+.findbanner__text {
+  max-width: 62ch;
+  margin: 0 0 32px;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.findbanner__btn {
+  display: inline-block;
+  padding: 14px 24px;
+  background: #fffdf5;
+  color: #404040;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+.findbanner__btn:hover {
+  background: #fff;
+}
+
+/* phones and tablets: photo on top, green panel underneath */
+@media (max-width: 800px) {
+  .findbanner {
+    height: auto;
+    padding-top: 260px;
+    background-size: auto 260px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: #4a7316;
+  }
+  .findbanner__stripe {
+    display: none;
+  }
+  .findbanner__panel {
+    position: static;
+    width: 100%;
+    padding: 32px 24px;
+    clip-path: none;
+  }
+  .findbanner__title {
+    margin-bottom: 20px;
+  }
+  .findbanner__text {
+    font-size: 1.05rem;
+  }
+}

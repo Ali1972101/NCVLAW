@@ -1,0 +1,20 @@
+/* second paragraph and the button under the approach text */
+.approach__body--second {
+  margin-top: 20px;
+}
+
+.approach__btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 20px;
+  background: #4a7316;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+.approach__btn:hover {
+  background: #3f6412;
+}

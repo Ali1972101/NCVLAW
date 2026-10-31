@@ -1,0 +1,55 @@
+/* ---------- approach ---------- */
+.approach {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;          /* photo matches the height of the text */
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  background: #fffdf5;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding: 82px;
+}
+
+.approach__title {
+  margin: 0 0 28px;
+  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  color: #404040;
+}
+
+.approach__body {
+  margin: 0 0 24px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #404040;
+}
+.approach__body:last-child {
+  margin-bottom: 0;
+}
+
+.approach__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* tablets and phones: text first, photo underneath */
+@media (max-width: 900px) {
+  .approach {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 16px 48px;
+     margin-top: 0px;
+  margin-bottom: 0px;
+  /* padding: 0px; */
+  }
+  .approach__image img {
+    height: auto;
+    min-height: 0;
+  }
+}

@@ -1,0 +1,296 @@
+/* three items instead of four */
+.svc-list__box--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1000px) {
+  .svc-list__box--3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .svc-list__box--3 { grid-template-columns: 1fr; }
+}
+
+/* ---------- lawyers section ---------- */
+.lawyers {
+  padding: 24px 20px 32px;
+  background: #fffdf5;
+  text-align: center;
+}
+
+.lawyers__title {
+  margin: 0 0 10px;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  color: #404040;
+}
+
+.lawyers__sub {
+  max-width: 1000px;
+  margin: 0 auto 18px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #404040;
+}
+
+/* 5 cards per row: 10 people = 2 full rows */
+.lawyers__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.lawyer {
+  display: flex;
+  flex-direction: column;
+  background: #fffdf5;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.lawyer__photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+.lawyer__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;        /* keeps faces in the crop */
+  border-radius: 4px 4px 0 0;
+}
+
+/* green name tag at the bottom-left of the photo */
+.lawyer__name {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  max-width: 92%;
+  padding: 4px 10px;
+  background: #62a024;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: 0 4px 0 0;
+}
+
+.lawyer__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 0;
+  padding: 10px;
+  font-size: 0.85rem;
+}
+.lawyer__info a {
+  color: #404040;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.lawyer__info a:hover {
+  color: #4a7316;
+  text-decoration: underline;
+}
+
+/* ---------- smaller screens ---------- */
+@media (max-width: 1000px) {
+  .lawyers__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 650px) {
+  .lawyers__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 420px) {
+  .lawyers__grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- safety reset (keep this LAST in the file) ---------- */
+/* stops an old ".lawyers" banner rule from clipping this section */
+.lawyers {
+  position: static;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  background-image: none;
+  background-color: #fffdf5;
+}
+
+
+.gt {
+  position: relative;
+  padding: 24px 20px 56px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* green tint over the photo */
+.gt__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(74, 115, 22, 0.88);
+}
+
+.gt__content {
+  position: relative;          /* sits above the tint */
+  max-width: 1070px;
+  margin: 0 auto;
+}
+
+.gt__title {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: clamp(1.9rem, 3.5vw, 2.4rem);
+  color: #fff;
+}
+
+.gt__intro {
+  max-width: 900px;
+  margin: 0 auto 28px;
+  text-align: center;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.gt__card {
+  padding: 24px;
+  background: #fffdf5;
+  border-radius: 4px;
+}
+
+/* ---------- form layout ---------- */
+.gt__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+}
+
+.gt__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: #404040;
+}
+.gt__field--full {
+  grid-column: 1 / -1;
+}
+.gt__field i,
+.gt__areas legend i {
+  color: #c00;
+  font-style: normal;
+}
+
+.gt__field input,
+.gt__field textarea,
+.gt__field select {
+  padding: 9px 10px;
+  font: inherit;
+  background: #fffdf5;
+  border: 1px solid #6b7aa1;
+  border-radius: 4px;
+}
+.gt__field input:focus,
+.gt__field textarea:focus,
+.gt__field select:focus {
+  outline: 2px solid #4a7316;
+  outline-offset: 1px;
+}
+
+/* ---------- practice areas ---------- */
+.gt__areas {
+  grid-column: 1 / -1;
+  margin: 12px 0 8px;
+  padding: 0;
+  border: 0;
+}
+.gt__areas legend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #404040;
+}
+
+.gt__checks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px 20px;
+}
+
+.gt__check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #404040;
+  cursor: pointer;
+}
+
+/* custom green checkbox */
+.gt__check input {
+  appearance: none;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  background: #fffdf5;
+  border: 1px solid #6b7aa1;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.gt__check input:checked {
+  background: #4a7316 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L19 7'/%3E%3C/svg%3E") center / 14px no-repeat;
+  border-color: #4a7316;
+}
+.gt__check input:focus-visible {
+  outline: 2px solid #4a7316;
+  outline-offset: 2px;
+}
+
+.gt__error {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: #c00;
+}
+
+/* ---------- submit ---------- */
+.gt__submit {
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 12px 24px;
+  background: #4a7316;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  border: 1px solid #6b7aa1;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.gt__submit:hover {
+  background: #3f6412;
+}
+
+.gt__thanks {
+  margin: 0;
+  padding: 24px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #3f7a14;
+}
+
+/* ---------- smaller screens ---------- */
+@media (max-width: 900px) {
+  .gt__checks { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .gt__form { grid-template-columns: 1fr; }
+  .gt__checks { grid-template-columns: 1fr; }
+  .gt__card { padding: 18px 14px; }
+}
