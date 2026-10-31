@@ -8,7 +8,7 @@ import person1 from "../assets/Person1.jpg";
 import person2 from "../assets/Person2.jpg";
 import person3 from "../assets/Person3.jpg";
 import person4 from "../assets/Person4.jpg";
-import person5 from "../assets/Person5.jpg";
+import person5 from "../assets/person5.jpg";
 import person7 from "../assets/Person7.jpg";
 import person9 from "../assets/Person9.jpg";
 import person10 from "../assets/Person10.jpg";

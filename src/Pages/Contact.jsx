@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../assets/Navbar/Navbar";
 import Footer from "./Components/Footer";
-import contactImage from "../assets/Contactimage.png"; // banner photo
-import buildingImg from "../assets/Contactimage.png";  // building photo
+import contactImage from "../assets/Contactimage.png"; 
+import buildingImg from "../assets/Contactimage.png";  
 import ContactModal from "./ContactModal";
-import lawyerImage from "../assets/Imagecall.png"; // banner photo
+import lawyerImage from "../assets/Imagecall.png"; 
 import "./Contact.css";
 
 const contact = {

@@ -8,7 +8,7 @@ const title = "Family Law";
 import person1 from "../assets/Person1.jpg";
 import person2 from "../assets/Person2.jpg";
 import person4 from "../assets/Person4.jpg";
-import person5 from "../assets/Person5.jpg";
+import person5 from "../assets/person5.jpg";
 import person6 from "../assets/Person6.jpg";
 import person7 from "../assets/Person7.jpg";
 import person8 from "../assets/Person8.jpg";
