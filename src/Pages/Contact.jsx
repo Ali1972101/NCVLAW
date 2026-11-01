@@ -9,9 +9,9 @@ import lawyerImage from "../assets/Imagecall.png";
 import "./Contact.css";
 
 const contact = {
-  name: "Guelph Office",
+  name: "ohio Office",
   address1: "245 Hanlon Creek Boulevard, Unit 102",
-  address2: "Guelph, ON N1C 0A1",
+  address2: "ohio, ON N1C 0A1",
   phone: "519 837 2100",
   tollFree: "800 746 0685",
   fax: "519 837 1617",

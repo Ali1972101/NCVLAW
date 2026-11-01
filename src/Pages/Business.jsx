@@ -245,7 +245,7 @@ const Business = () => {
                     Preferred Office <i>*</i>
                   </span>
                   <select name="office" required>
-                    <option>Guelph</option>
+                    <option>ohio</option>
                   </select>
                 </label>
 
