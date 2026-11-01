@@ -92,14 +92,8 @@ export default async function handler(req, res) {
     });
     return res.status(200).json({ ok: true });
   } catch (error) {
+    // the reason goes to Vercel's Logs only, never to the visitor
     console.error("Email failed:", error.message);
-
-    // TEMPORARY: shows why it failed so we can fix it. Remove these 3 lines later.
-    return res.status(500).json({
-      error: "Could not send the message.",
-      code: error.code,
-      responseCode: error.responseCode,
-      reason: error.message,
-    });
+    return res.status(500).json({ error: "Could not send the message." });
   }
 }
