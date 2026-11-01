@@ -1,10 +1,7 @@
 import nodemailer from "nodemailer";
 
-// ---------- settings ----------
-const RECEIVER = "info@ncvlaw.org"; // where every inquiry is delivered
+const RECEIVER = "info@ncvlaw.org";
 
-// Hostinger mail server (port 465 = SSL). If sending fails with an
-// encryption error, change to: port: 587 and secure: false
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
   port: 465,
@@ -90,6 +87,13 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("Email failed:", error.message);
-    return res.status(500).json({ error: "Could not send the message." });
+
+    // TEMPORARY: shows why it failed so we can fix it. Remove these 3 lines later.
+    return res.status(500).json({
+      error: "Could not send the message.",
+      code: error.code,
+      responseCode: error.responseCode,
+      reason: error.message,
+    });
   }
 }
