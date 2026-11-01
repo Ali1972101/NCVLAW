@@ -262,7 +262,7 @@ const Family = () => {
                 <label className="gt__field gt__field--full">
                   <span>Preferred Office <i>*</i></span>
                   <select name="office" required>
-                    <option>Guelph</option>
+                    <option>Ohio</option>
                   </select>
                 </label>
 
