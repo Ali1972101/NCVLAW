@@ -2,10 +2,16 @@ import nodemailer from "nodemailer";
 
 const RECEIVER = "info@ncvlaw.org";
 
+// SMTP_PORT is optional. Without it we use 465 (SSL). Set it to 587 to try STARTTLS.
+const port = Number(process.env.SMTP_PORT || 465);
+
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
-  port: 465,
-  secure: true,
+  port,
+  secure: port === 465, // true for 465, false for 587
+  connectionTimeout: 7000, // give up quickly instead of hanging
+  greetingTimeout: 7000,
+  socketTimeout: 9000,
   auth: {
     user: process.env.SMTP_USER, // set in Vercel: info@ncvlaw.org
     pass: process.env.SMTP_PASS, // set in Vercel: the mailbox password
