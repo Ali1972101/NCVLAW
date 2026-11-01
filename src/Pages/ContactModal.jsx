@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { sendInquiry } from "../SendInquiry";
 import "./ContactModal.css";
 
 const ContactModal = ({ onClose }) => {
   const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | error
 
   // Close with the Escape key, and stop the page scrolling behind the form
   useEffect(() => {
@@ -15,11 +17,20 @@ const ContactModal = ({ onClose }) => {
     };
   }, [onClose]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = Object.fromEntries(new FormData(e.target));
-    console.log(data); // TODO: send this to your email service or backend
-    setSent(true);
+    if (data._gotcha) return; // a bot filled the hidden trap field
+
+    setStatus("sending");
+    try {
+      await sendInquiry(data); // sends it to info@ncvlaw.org
+      setSent(true);
+      setStatus("idle");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -29,7 +40,7 @@ const ContactModal = ({ onClose }) => {
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        onClick={(e) => e.stopPropagation()} // clicks inside don't close it
+        onClick={(e) => e.stopPropagation()}
       >
         <button className="modal__close" onClick={onClose} aria-label="Close">
           X
@@ -85,7 +96,29 @@ const ContactModal = ({ onClose }) => {
               </select>
             </label>
 
-            <button type="submit" className="modal__submit">Submit</button>
+            {/* spam trap: real visitors never see or fill this */}
+            <input
+              type="text"
+              name="_gotcha"
+              tabIndex="-1"
+              autoComplete="off"
+              className="hp"
+            />
+
+            {status === "error" && (
+              <p className="modal__error">
+                Sorry, something went wrong. Please try again, or email us at
+                info@ncvlaw.org.
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="modal__submit"
+              disabled={status === "sending"}
+            >
+              {status === "sending" ? "Sending..." : "Submit"}
+            </button>
           </form>
         )}
       </div>

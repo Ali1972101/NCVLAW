@@ -15,6 +15,7 @@ import person13 from "../assets/Person13.jpg";
 import person14 from "../assets/Person14.jpg";
 import person15 from "../assets/Person15.jpg";
 import bgImage from "../assets/Contactimage.png";
+import { sendInquiry } from "../SendInquiry";
 
 const title = "Wills & Estates";
 
@@ -45,10 +46,11 @@ const DocIcon = () => (
 );
 
 const Wills = () => {
-  // form state lives inside the component that shows the form
+  // all form state lives INSIDE the component
   const [selected, setSelected] = useState(["Wills & Estates"]); // pre-ticked for this page
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | error
 
   const toggleArea = (area) => {
     setError("");
@@ -57,7 +59,7 @@ const Wills = () => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // checkboxes can't use "required" as a group, so check by hand
@@ -67,9 +69,18 @@ const Wills = () => {
     }
 
     const data = Object.fromEntries(new FormData(e.target));
-    data.practiceAreas = selected;
-    console.log(data); // TODO: send this to your email service or backend
-    setSent(true);
+    if (data._gotcha) return; // a bot filled the hidden trap field
+
+    data.practiceAreas = selected.join(", ");
+
+    setStatus("sending");
+    try {
+      await sendInquiry(data); // sends it to info@ncvlaw.org
+      setSent(true);
+      setStatus("idle");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -229,7 +240,29 @@ const Wills = () => {
                   </select>
                 </label>
 
-                <button type="submit" className="gt__submit">Submit</button>
+                {/* spam trap: real visitors never see or fill this */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex="-1"
+                  autoComplete="off"
+                  className="hp"
+                />
+
+                {status === "error" && (
+                  <p className="gt__error" style={{ gridColumn: "1 / -1" }}>
+                    Sorry, something went wrong. Please try again, or email us
+                    at info@ncvlaw.org.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="gt__submit"
+                  disabled={status === "sending"}
+                >
+                  {status === "sending" ? "Sending..." : "Submit"}
+                </button>
               </form>
             )}
           </div>
@@ -241,4 +274,4 @@ const Wills = () => {
   );
 };
 
-export default Wills;
+export default Wills; 

@@ -4,7 +4,6 @@ import Footer from "./Components/Footer";
 import "./Family.css";
 import bannerImg from "../assets/Familyimage.png";
 import approachImg from "../assets/Lawyerphoto.jpg";
-const title = "Family Law";
 import person1 from "../assets/Person1.jpg";
 import person2 from "../assets/Person2.jpg";
 import person4 from "../assets/Person4.jpg";
@@ -16,7 +15,9 @@ import person9 from "../assets/Person9.jpg";
 import person12 from "../assets/Person12.jpg";
 import person13 from "../assets/Person13.jpg";
 import bgImage from "../assets/Contactimage.png";
+import { sendInquiry } from "../SendInquiry";
 
+const title = "Family Law";
 
 const items = [
   "Family Law Litigation",
@@ -33,8 +34,8 @@ const items = [
   "Succession Planning",
   "Dividing Farm and Business Assets",
 ];
-const areas = ["Business Law", "Family Law", "Real Estate Law", "Wills & Estates"];
 
+const areas = ["Business Law", "Family Law", "Real Estate Law", "Wills & Estates"];
 
 const lawyers = [
   { name: "Shazda Ledford",    phone: "843-996-0259", email: "ledford@ncvlaw.org",  photo: person8 },
@@ -58,11 +59,12 @@ const ScalesIcon = () => (
   </svg>
 );
 
-
 const Family = () => {
-  const [selected, setSelected] = useState([]);
+  // all form state lives INSIDE the component
+  const [selected, setSelected] = useState(["Family Law"]); // pre-ticked for this page
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | error
 
   const toggleArea = (area) => {
     setError("");
@@ -73,24 +75,35 @@ const Family = () => {
     );
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // checkboxes can't use "required" as a group, so check by hand
     if (selected.length === 0) {
       setError("Please choose at least one practice area.");
       return;
     }
 
-    const formData = Object.fromEntries(new FormData(event.target));
-    formData.practiceAreas = selected;
-    console.log(formData);
-    setSent(true);
+    const data = Object.fromEntries(new FormData(event.target));
+    if (data._gotcha) return; // a bot filled the hidden trap field
+
+    data.practiceAreas = selected.join(", ");
+
+    setStatus("sending");
+    try {
+      await sendInquiry(data); // sends it to info@ncvlaw.org
+      setSent(true);
+      setStatus("idle");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
     <div>
       <Navbar />
-       <section
+
+      <section
         className="banner banner--contact"
         style={{ backgroundImage: `url(${bannerImg})` }}
       >
@@ -107,76 +120,83 @@ const Family = () => {
             <li className="svc-item" key={item}>
               <ScalesIcon />
               <span>{item}</span>
-            </li> 
+            </li>
           ))}
         </ul>
       </section>
-      <section  className="approach">
-  <div className="approach__text">
-    <h2 className="approach__title">The NCV Law Approach</h2>
 
-    <p className="approach__body">
-      The Family Law Team at NCV Law provides experienced, compassionate
-      guidance through all aspects of family law, including separation,
-      divorce, parenting and decision-making responsibility for children,
-      child support, spousal support, and property division. We understand
-      that family law matters are often emotionally and financially
-      challenging, which is why we take the time to understand each client’s
-      unique circumstances and goals.
-    </p>
+      {/* approach */}
+      <section className="approach">
+        <div className="approach__text">
+          <h2 className="approach__title">The NCV Law Approach</h2>
 
-    <p className="approach__body">
-      Whenever possible, we help clients achieve practical, cost-effective
-      resolutions through negotiation, mediation, and collaborative law. When
-      litigation is necessary, our lawyers are skilled advocates with
-      extensive experience handling complex and high-conflict family law
-      disputes at all levels of court.
-    </p>
+          <p className="approach__body">
+            The Family Law Team at NCV Law provides experienced, compassionate
+            guidance through all aspects of family law, including separation,
+            divorce, parenting and decision-making responsibility for children,
+            child support, spousal support, and property division. We
+            understand that family law matters are often emotionally and
+            financially challenging, which is why we take the time to
+            understand each client’s unique circumstances and goals.
+          </p>
 
-    <p className="approach__body">
-      Our team-based approach ensures clients benefit from the collective
-      knowledge of our lawyers, dedicated support staff, and trusted
-      professional networks. We also have extensive experience advising
-      high-net-worth individuals, business owners, and farmers on the unique
-      legal and financial issues that can arise following a separation.
-    </p>
+          <p className="approach__body">
+            Whenever possible, we help clients achieve practical, cost-effective
+            resolutions through negotiation, mediation, and collaborative law.
+            When litigation is necessary, our lawyers are skilled advocates
+            with extensive experience handling complex and high-conflict family
+            law disputes at all levels of court.
+          </p>
 
-    <p className="approach__body">
-      Whatever challenges your family is facing, you can count on the Family
-      Law Team at NCV Law to provide trusted advice, strategic advocacy, and
-      unwavering support every step of the way.
-    </p>
-  </div>
+          <p className="approach__body">
+            Our team-based approach ensures clients benefit from the collective
+            knowledge of our lawyers, dedicated support staff, and trusted
+            professional networks. We also have extensive experience advising
+            high-net-worth individuals, business owners, and farmers on the
+            unique legal and financial issues that can arise following a
+            separation.
+          </p>
 
-  <div className="approach__image">
-    <img src={approachImg} alt="The NCV Law Family Law team" />
-  </div>
-</section>
-<section className="lawyers">
-  <h2 className="lawyers__title">Family Law Lawyers</h2>
-  <p className="lawyers__sub">
-    Our team is dedicated to providing tailored solutions for every legal
-    challenge, collaborating across specialties to offer you reliable,
-    comprehensive legal support.
-  </p>
-
-  <div className="lawyers__grid">
-    {lawyers.map((p) => (
-      <article className="lawyer" key={p.email}>
-        <div className="lawyer__photo">
-          <img src={p.photo} alt={p.name} />
-          <span className="lawyer__name">{p.name}</span>
+          <p className="approach__body">
+            Whatever challenges your family is facing, you can count on the
+            Family Law Team at NCV Law to provide trusted advice, strategic
+            advocacy, and unwavering support every step of the way.
+          </p>
         </div>
 
-        <div className="lawyer__info">
-          <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>
-          <a href={`mailto:${p.email}`}>{p.email}</a>
+        <div className="approach__image">
+          <img src={approachImg} alt="The NCV Law Family Law team" />
         </div>
-      </article>
-    ))}
-  </div>
-</section>
-<section
+      </section>
+
+      {/* lawyers */}
+      <section className="lawyers">
+        <h2 className="lawyers__title">Family Law Lawyers</h2>
+        <p className="lawyers__sub">
+          Our team is dedicated to providing tailored solutions for every legal
+          challenge, collaborating across specialties to offer you reliable,
+          comprehensive legal support.
+        </p>
+
+        <div className="lawyers__grid">
+          {lawyers.map((p) => (
+            <article className="lawyer" key={p.email}>
+              <div className="lawyer__photo">
+                <img src={p.photo} alt={p.name} />
+                <span className="lawyer__name">{p.name}</span>
+              </div>
+
+              <div className="lawyer__info">
+                <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>
+                <a href={`mailto:${p.email}`}>{p.email}</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* get in touch form */}
+      <section
         className="gt"
         style={{ backgroundImage: `url(${bgImage})`, marginTop: "10px" }}
       >
@@ -256,7 +276,29 @@ const Family = () => {
                   </select>
                 </label>
 
-                <button type="submit" className="gt__submit">Submit</button>
+                {/* spam trap: real visitors never see or fill this */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex="-1"
+                  autoComplete="off"
+                  className="hp"
+                />
+
+                {status === "error" && (
+                  <p className="gt__error" style={{ gridColumn: "1 / -1" }}>
+                    Sorry, something went wrong. Please try again, or email us
+                    at info@ncvlaw.org.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="gt__submit"
+                  disabled={status === "sending"}
+                >
+                  {status === "sending" ? "Sending..." : "Submit"}
+                </button>
               </form>
             )}
           </div>

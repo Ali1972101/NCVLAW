@@ -15,6 +15,7 @@ import person10 from "../assets/Person10.jpg";
 import person11 from "../assets/Person11.jpg";
 import person12 from "../assets/Person12.jpg";
 import bgImage from "../assets/Contactimage.png";
+import { sendInquiry } from "../SendInquiry";
 
 const title = "Business Law";
 
@@ -38,67 +39,16 @@ const DocIcon = () => (
 );
 
 const lawyers = [
-  {
-    name: "Melinda Armstrong",
-    phone: "347-356-0987",
-    email: "melinda@ncvlaw.org",
-    photo: person1,
-  },
-  {
-    name: "Raj Graham",
-    phone: "984-374-3329",
-    email: "raj@ncvlaw.org",
-    photo: person2,
-  },
-  {
-    name: "Sarah Bhangui",
-    phone: "786-908-4180",
-    email: "sarah@ncvlaw.org",
-    photo: person3,
-  },
-  {
-    name: "David Wilson",
-    phone: "901-208-9006",
-    email: "david@ncvlaw.org",
-    photo: person4,
-  },
-  {
-    name: "Alicia Johnson",
-    phone: "334-233-0187",
-    email: "alicia@ncvlaw.org",
-    photo: person5,
-  },
-
-  {
-    name: "Trenton Williams",
-    phone: "203-510-4890",
-    email: "trenton@ncvlaw.org",
-    photo: person11,
-  },
-  {
-    name: "James Cockburn",
-    phone: "469-662-6397",
-    email: "james@ncvlaw.org",
-    photo: person7,
-  },
-  {
-    name: "Franklin Brown",
-    phone: "252-412-8224",
-    email: "franklin@ncvlaw.org",
-    photo: person12,
-  },
-  {
-    name: "Lisa Eric",
-    phone: "803-460-0880",
-    email: "lisa@ncvlaw.org",
-    photo: person9,
-  },
-  {
-    name: "Timothy Graham",
-    phone: "312-206-2190",
-    email: "timothy@ncvlaw.org",
-    photo: person10,
-  },
+  { name: "Melinda Armstrong", phone: "347-356-0987", email: "melinda@ncvlaw.org",  photo: person1 },
+  { name: "Raj Graham",        phone: "984-374-3329", email: "raj@ncvlaw.org",      photo: person2 },
+  { name: "Sarah Bhangui",     phone: "786-908-4180", email: "sarah@ncvlaw.org",    photo: person3 },
+  { name: "David Wilson",      phone: "901-208-9006", email: "david@ncvlaw.org",    photo: person4 },
+  { name: "Alicia Johnson",    phone: "334-233-0187", email: "alicia@ncvlaw.org",   photo: person5 },
+  { name: "Trenton Williams",  phone: "203-510-4890", email: "trenton@ncvlaw.org",  photo: person11 },
+  { name: "James Cockburn",    phone: "469-662-6397", email: "james@ncvlaw.org",    photo: person7 },
+  { name: "Franklin Brown",    phone: "252-412-8224", email: "franklin@ncvlaw.org", photo: person12 },
+  { name: "Lisa Eric",         phone: "803-460-0880", email: "lisa@ncvlaw.org",     photo: person9 },
+  { name: "Timothy Graham",    phone: "312-206-2190", email: "timothy@ncvlaw.org",  photo: person10 },
 ];
 
 const areas = [
@@ -109,10 +59,11 @@ const areas = [
 ];
 
 const Business = () => {
-  // form state lives inside the component that shows the form
-  const [selected, setSelected] = useState([]);
+  // all form state lives INSIDE the component
+  const [selected, setSelected] = useState(["Business Law"]); // pre-ticked for this page
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | error
 
   const toggleArea = (area) => {
     setError("");
@@ -121,7 +72,7 @@ const Business = () => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // checkboxes can't use "required" as a group, so check by hand
@@ -131,9 +82,18 @@ const Business = () => {
     }
 
     const data = Object.fromEntries(new FormData(e.target));
-    data.practiceAreas = selected;
-    console.log(data); // TODO: send this to your email service or backend
-    setSent(true);
+    if (data._gotcha) return; // a bot filled the hidden trap field
+
+    data.practiceAreas = selected.join(", ");
+
+    setStatus("sending");
+    try {
+      await sendInquiry(data); // sends it to info@ncvlaw.org
+      setSent(true);
+      setStatus("idle");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -169,8 +129,8 @@ const Business = () => {
           <p className="approach__body">
             At NCV Law, our Business Law team provides expert, practical
             guidance to help you navigate complex legal challenges and grow your
-            business. We support clients at every stage whether starting,
-            running, reorganizing, or buying and selling a business while
+            business. We support clients at every stage—whether starting,
+            running, reorganizing, or buying and selling a business—while
             offering advice on succession planning and long-term sustainability.
           </p>
         </div>
@@ -206,6 +166,7 @@ const Business = () => {
         </div>
       </section>
 
+      {/* get in touch form */}
       <section
         className="gt"
         style={{ backgroundImage: `url(${bgImage})`, marginTop: "10px" }}
@@ -300,8 +261,28 @@ const Business = () => {
                   </select>
                 </label>
 
-                <button type="submit" className="gt__submit">
-                  Submit
+                {/* spam trap: real visitors never see or fill this */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex="-1"
+                  autoComplete="off"
+                  className="hp"
+                />
+
+                {status === "error" && (
+                  <p className="gt__error" style={{ gridColumn: "1 / -1" }}>
+                    Sorry, something went wrong. Please try again, or email us
+                    at info@ncvlaw.org.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="gt__submit"
+                  disabled={status === "sending"}
+                >
+                  {status === "sending" ? "Sending..." : "Submit"}
                 </button>
               </form>
             )}

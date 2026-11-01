@@ -2,7 +2,7 @@ import { useState } from "react";
 import Navbar from "../assets/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "./Realestate.css";
-import bannerImg from "../assets/Realestateimage.png";     // house photo
+import bannerImg from "../assets/Realestateimage.png"; // house photo
 import approachImg from "../assets/womentalking.png";
 import LandTransferModal from "./LandTransferModal";
 import person1 from "../assets/Person1.jpg";
@@ -16,7 +16,7 @@ import person11 from "../assets/Person11.jpg";
 import person14 from "../assets/Person14.jpg";
 import person15 from "../assets/Person15.jpg";
 import bgImage from "../assets/Contactimage.png";
-
+import { sendInquiry } from "../SendInquiry";
 
 const title = "Real Estate Law";
 
@@ -30,6 +30,7 @@ const items = [
   "Sale Agreements",
   "Lease & Rental Agreements",
 ];
+
 const areas = ["Business Law", "Family Law", "Real Estate Law", "Wills & Estates"];
 
 const lawyers = [
@@ -55,10 +56,12 @@ const HouseIcon = () => (
 );
 
 const Realestate = () => {
+  // all state lives INSIDE the component
   const [showCalc, setShowCalc] = useState(false);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(["Real Estate Law"]); // pre-ticked for this page
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | error
 
   const toggleArea = (area) => {
     setError("");
@@ -69,24 +72,35 @@ const Realestate = () => {
     );
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // checkboxes can't use "required" as a group, so check by hand
     if (selected.length === 0) {
       setError("Please choose at least one practice area.");
       return;
     }
 
-    const formData = Object.fromEntries(new FormData(event.target));
-    formData.practiceAreas = selected;
-    console.log(formData);
-    setSent(true);
+    const data = Object.fromEntries(new FormData(event.target));
+    if (data._gotcha) return; // a bot filled the hidden trap field
+
+    data.practiceAreas = selected.join(", ");
+
+    setStatus("sending");
+    try {
+      await sendInquiry(data); // sends it to info@ncvlaw.org
+      setSent(true);
+      setStatus("idle");
+    } catch {
+      setStatus("error");
+    }
   };
 
-    return (
-        <div>
-            <Navbar />
-             <section
+  return (
+    <div>
+      <Navbar />
+
+      <section
         className="banner banner--contact"
         style={{ backgroundImage: `url(${bannerImg})` }}
       >
@@ -143,33 +157,38 @@ const Realestate = () => {
           <img src={approachImg} alt="A lawyer meeting with a client" />
         </div>
       </section>
-        {showCalc && <LandTransferModal onClose={() => setShowCalc(false)} />}
-            
-            <section className="lawyers">
-  <h2 className="lawyers__title">Real Estate Law Lawyers</h2>
-  <p className="lawyers__sub">
-    Our team is dedicated to providing tailored solutions for every legal
-    challenge, collaborating across specialties to offer you reliable,
-    comprehensive legal support.
-  </p>
 
-  <div className="lawyers__grid">
-    {lawyers.map((p) => (
-      <article className="lawyer" key={p.email}>
-        <div className="lawyer__photo">
-          <img src={p.photo} alt={p.name} />
-          <span className="lawyer__name">{p.name}</span>
-        </div>
+      {/* the calculator pop-up */}
+      {showCalc && <LandTransferModal onClose={() => setShowCalc(false)} />}
 
-        <div className="lawyer__info">
-          <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>
-          <a href={`mailto:${p.email}`}>{p.email}</a>
+      {/* lawyers */}
+      <section className="lawyers">
+        <h2 className="lawyers__title">Real Estate Law Lawyers</h2>
+        <p className="lawyers__sub">
+          Our team is dedicated to providing tailored solutions for every legal
+          challenge, collaborating across specialties to offer you reliable,
+          comprehensive legal support.
+        </p>
+
+        <div className="lawyers__grid">
+          {lawyers.map((p) => (
+            <article className="lawyer" key={p.email}>
+              <div className="lawyer__photo">
+                <img src={p.photo} alt={p.name} />
+                <span className="lawyer__name">{p.name}</span>
+              </div>
+
+              <div className="lawyer__info">
+                <a href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>{p.phone}</a>
+                <a href={`mailto:${p.email}`}>{p.email}</a>
+              </div>
+            </article>
+          ))}
         </div>
-      </article>
-    ))}
-  </div>
-</section>
- <section
+      </section>
+
+      {/* get in touch form */}
+      <section
         className="gt"
         style={{ backgroundImage: `url(${bgImage})`, marginTop: "10px" }}
       >
@@ -249,15 +268,38 @@ const Realestate = () => {
                   </select>
                 </label>
 
-                <button type="submit" className="gt__submit">Submit</button>
+                {/* spam trap: real visitors never see or fill this */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex="-1"
+                  autoComplete="off"
+                  className="hp"
+                />
+
+                {status === "error" && (
+                  <p className="gt__error" style={{ gridColumn: "1 / -1" }}>
+                    Sorry, something went wrong. Please try again, or email us
+                    at info@ncvlaw.org.
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  className="gt__submit"
+                  disabled={status === "sending"}
+                >
+                  {status === "sending" ? "Sending..." : "Submit"}
+                </button>
               </form>
             )}
           </div>
         </div>
       </section>
+
       <Footer />
-        </div>
-    );
+    </div>
+  );
 };
 
-export default Realestate;
+export default Realestate; 

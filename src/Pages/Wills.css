@@ -294,3 +294,17 @@
   .gt__checks { grid-template-columns: 1fr; }
   .gt__card { padding: 18px 14px; }
 }
+
+/* hidden spam trap */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.gt__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
