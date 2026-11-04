@@ -227,6 +227,8 @@ const Wills = () => {
                   <span>Preferred Office <i>*</i></span>
                   <select name="office" required>
                     <option>Dubai</option>
+                    <option>Canada</option>
+
                   </select>
                 </label>
 

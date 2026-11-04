@@ -246,6 +246,8 @@ const Business = () => {
                   </span>
                   <select name="office" required>
                     <option>Dubai</option>
+                    <option>Canada</option>
+
                   </select>
                 </label>
 
