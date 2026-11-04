@@ -5,7 +5,7 @@ import Footer from "./Components/Footer";
 import contactImage from "../assets/Contactimage.png";
 import buildingImg from "../assets/Contactimage.png";
 import lawyerImage from "../assets/Imagecall.png";
-import { sendInquiry } from "../sendInquiry";
+import { sendInquiry } from "../SendInquiry";
 import "./Contact.css";
 
 const contact = {
