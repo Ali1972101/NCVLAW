@@ -166,7 +166,7 @@ const Business = () => {
         </div>
       </section>
 
-      {/* get in touch form */}
+      
       <section
         className="gt"
         style={{ backgroundImage: `url(${bgImage})`, marginTop: "10px" }}
@@ -245,7 +245,7 @@ const Business = () => {
                     Preferred Office <i>*</i>
                   </span>
                   <select name="office" required>
-                    <option>Ohio</option>
+                    <option>Dubai</option>
                   </select>
                 </label>
 
@@ -287,7 +287,7 @@ const Business = () => {
               </form>
             )}
           </div>
-        </div>
+        </div> 
       </section>
 
       <Footer />

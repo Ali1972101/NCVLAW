@@ -2,24 +2,23 @@ import nodemailer from "nodemailer";
 
 const RECEIVER = "info@ncvlaw.org";
 
-// SMTP_PORT is optional. Without it we use 465 (SSL). Set it to 587 to try STARTTLS.
+
 const port = Number(process.env.SMTP_PORT || 465);
 
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
   port,
-  secure: port === 465, // true for 465, false for 587
-  connectionTimeout: 7000, // give up quickly instead of hanging
+  secure: port === 465, 
+  connectionTimeout: 7000, 
   greetingTimeout: 7000,
   socketTimeout: 9000,
   auth: {
-    user: process.env.SMTP_USER, // set in Vercel: info@ncvlaw.org
-    pass: process.env.SMTP_PASS, // set in Vercel: the mailbox password
+    user: process.env.SMTP_USER, 
+    pass: process.env.SMTP_PASS, 
   },
 });
 
-// ---------- helpers ----------
-// trims, limits the length, and (by default) removes line breaks
+
 const clean = (value, max = 200, keepNewlines = false) => {
   const text = String(value ?? "").trim().slice(0, max);
   return keepNewlines ? text : text.replace(/[\r\n]+/g, " ");
@@ -92,7 +91,7 @@ export default async function handler(req, res) {
     });
     return res.status(200).json({ ok: true });
   } catch (error) {
-    // the reason goes to Vercel's Logs only, never to the visitor
+
     console.error("Email failed:", error.message);
     return res.status(500).json({ error: "Could not send the message." });
   }
